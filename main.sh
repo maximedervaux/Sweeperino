@@ -22,7 +22,7 @@ log() {
 nettoyer_paquets() {
     log "Nettoyage des paquets inutilisés avec $PKG_MGR"
     if [[ $PKG_MGR == "apt" ]]; then
-        sudo apt autoremove -y | tee -a "$LOG_FILE"
+       	sudo apt autoremove -y | tee -a "$LOG_FILE"
         sudo apt clean | tee -a "$LOG_FILE"
     elif [[ $PKG_MGR == "dnf" ]]; then
         sudo dnf autoremove -y | tee -a "$LOG_FILE"
@@ -97,3 +97,4 @@ while true; do
     menu
     read -rp "Appuyez sur Entrée pour continuer..."
 done
+
