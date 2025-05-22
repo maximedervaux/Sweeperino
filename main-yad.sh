@@ -9,9 +9,9 @@ log() {
 
 # Nettoyage paquets orphelins
 nettoyer_paquets() {
-    if command -v dnf &>/dev/null; then
+    if command -v dnf >/dev/null 2>&1; then
         CMD="sudo dnf autoremove -y"
-    elif command -v apt &>/dev/null; then
+    elif command -v apt >/dev/null 2>&1; then
         CMD="sudo apt autoremove -y"
     else
         yad --error --text="Gestionnaire de paquets non supporté."
@@ -55,7 +55,7 @@ nettoyer_logs() {
 
 # Trouver et supprimer doublons via fdupes
 nettoyer_doublons() {
-    if ! command -v fdupes &>/dev/null; then
+    if ! command -v fdupes >/dev/null 2>&1; then
         yad --error --text="Le paquet 'fdupes' n'est pas installé. Veuillez l'installer pour utiliser cette fonction."
         return
     fi
@@ -111,13 +111,15 @@ afficher_espace() {
 
 # Menu principal YAD
 while true; do
-    choix=$(yad --width=400 --height=350 --title="Mon Nettoyeur Linux - tralalelo tralalala" --list --column="Option" --column="Description" \
+    ligne=$(yad --width=400 --height=350 --title="Mon Nettoyeur Linux" --list --column="Option" --column="Description" \
         1 "Nettoyer paquets orphelins" \
         2 "Nettoyer logs vieux de 30 jours" \
-        3 "Trouver & supprimer doublons" \
+        3 "Trouver et supprimer doublons" \
         4 "Nettoyer cache utilisateur" \
         5 "Afficher espace disque" \
         6 "Quitter")
+   
+    choix=$(echo "$ligne" | cut -d"|" -f1)
 
     case "$choix" in
         1) nettoyer_paquets ;;
@@ -126,6 +128,6 @@ while true; do
         4) nettoyer_cache ;;
         5) afficher_espace ;;
         6) exit 0 ;;
-        *) yad --info --text="Option invalide" ;;
+        *) yad --info --text="$choix" ;;
     esac
 done
