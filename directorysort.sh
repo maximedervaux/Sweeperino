@@ -13,7 +13,7 @@ LOG_FILE="$HOME/reorganisation_downloads.log"
 # Cela gère les noms localisés (ex: "Images" vs "Pictures").
 USER_DESKTOP_DIR="$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")"
 USER_DOCUMENTS_DIR="$(xdg-user-dir DOCUMENTS 2>/dev/null || echo "$HOME/Documents")"
-USER_DOWNLOAD_DIR="$SOURCE_DIR" # Le dossier de téléchargements est déjà défini
+USER_DOWNLOAD_DIR="$SOURCE_DIR" 
 USER_MUSIC_DIR="$(xdg-user-dir MUSIC 2>/dev/null || echo "$HOME/Music")"
 USER_PICTURES_DIR="$(xdg-user-dir PICTURES 2>/dev/null || echo "$HOME/Pictures")"
 USER_VIDEOS_DIR="$(xdg-user-dir VIDEOS 2>/dev/null || echo "$HOME/Videos")"
@@ -37,7 +37,6 @@ declare -A FILE_TYPES=(
     [pdf]="$USER_DOCUMENTS_DIR"
     [odt]="$USER_DOCUMENTS_DIR"
     [txt]="$USER_DOCUMENTS_DIR"
-    [rtf]="$USER_DOCUMENTS_DIR"
     [md]="$USER_DOCUMENTS_DIR"
     [pptx]="$USER_DOCUMENTS_DIR"
     [ppt]="$USER_DOCUMENTS_DIR"
@@ -47,7 +46,7 @@ declare -A FILE_TYPES=(
     [epub]="$USER_DOCUMENTS_DIR/Ebooks" # Ajout spécifique pour les téléchargements
 
     # Archives
-    [zip]="$USER_DOWNLOAD_DIR/Archives" # Les archives restent souvent dans Téléchargements dans un sous-dossier
+    [zip]="$USER_DOWNLOAD_DIR/Archives" 
     [rar]="$USER_DOWNLOAD_DIR/Archives"
     [7z]="$USER_DOWNLOAD_DIR/Archives"
     [gz]="$USER_DOWNLOAD_DIR/Archives"
@@ -70,11 +69,11 @@ declare -A FILE_TYPES=(
     [mov]="$USER_VIDEOS_DIR"
     [wmv]="$USER_VIDEOS_DIR"
 
-    # Exécutables / Paquets (attention avec les exécutables !)
-    [deb]="$USER_DOWNLOAD_DIR/Packages" # Paquets Debian/Ubuntu
-    [rpm]="$USER_DOWNLOAD_DIR/Packages" # Paquets Fedora/CentOS
-    [AppImage]="$USER_DOWNLOAD_DIR/Applications" # AppImages
-    [exe]="$USER_DOWNLOAD_DIR/WindowsExecutables" # Exécutables Windows, si vous les téléchargez
+    # Exécutables / Paquets 
+    [deb]="$USER_DOWNLOAD_DIR/Packages" 
+    [rpm]="$USER_DOWNLOAD_DIR/Packages"
+    [AppImage]="$USER_DOWNLOAD_DIR/Applications" 
+    [exe]="$USER_DOWNLOAD_DIR/WindowsExecutables"
 
     # Scripts/Code (peut-être dans un sous-dossier de Documents)
     [sh]="$USER_DOCUMENTS_DIR/Scripts"
