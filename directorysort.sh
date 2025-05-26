@@ -4,7 +4,7 @@
 # Nous allons utiliser xdg-user-dir pour trouver le chemin correct de votre dossier de téléchargements.
 # Si xdg-user-dir n'est pas disponible ou échoue, il utilisera un chemin par défaut ($HOME/Downloads).
 
-SOURCE_DIR="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo "$HOME/Downloads")" # << LE DOSSIER SOURCE EST MAINTENANT LE DOSSIER DE TÉLÉCHARGEMENTS
+SOURCE_DIR="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo "$HOME/Downloads")" 
 LOG_FILE="$HOME/reorganisation_downloads.log"     
 
 
@@ -117,8 +117,6 @@ fi
 # --- LOGIQUE DE RÉORGANISATION ---
 log_message "INFO" "Démarrage de la réorganisation du dossier '$SOURCE_DIR'."
 log_message "INFO" "Mode: $( [ "$MOVE_FILES" = true ] && echo "Déplacement" || echo "Copie" ) des fichiers."
-
-shopt -s nullglob # Gère les motifs qui ne correspondent à aucun fichier
 
 # Parcourir tous les fichiers (non récursif, seulement dans le dossier source)
 for file in "$SOURCE_DIR"/*; do
