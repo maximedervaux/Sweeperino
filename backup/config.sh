@@ -1,18 +1,17 @@
 #!/bin/bash
 
-# === CONFIGURATION ===
+# Configuration file 
 
-# Dossier à sauvegarder
+# Target directory to backup
 SOURCE_DIR="$HOME/Documents"
 
-# Dossier où stocker les backups
+# Backup directory
 BACKUP_DIR="$HOME/backups"
 
-# Intervalle (en minutes) entre les backups
+# (to implement) Interval for automatic backups in minute
 INTERVAL_MINUTES=30
 
-# Nombre maximum de sauvegardes à conserver
+# MAX number of backups to keep
 MAX_BACKUPS=5
 
-# Salt fixe pour Argon2 (tu peux le randomiser et le stocker aussi)
 ARGON_SALT="12345678"
