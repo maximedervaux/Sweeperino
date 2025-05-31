@@ -36,7 +36,9 @@ while true; do
         3 "📁 Supprimer fichiers doublons" \
         4 "🧽 Nettoyer le cache utilisateur" \
         5 "💾 Afficher espace disque" \
-        6 "🚪 Quitter")
+        6 "📦 Faire une sauvegarde" \
+        7 "📂 Restaurer une sauvegarde" \
+        8 "🚪 Quitter")
 
     case "${CHOIX%%|*}" in
         1) nettoyer_paquets ;;
