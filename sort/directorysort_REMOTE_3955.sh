@@ -4,13 +4,8 @@
 # Nous allons utiliser xdg-user-dir pour trouver le chemin correct de votre dossier de téléchargements.
 # Si xdg-user-dir n'est pas disponible ou échoue, il utilisera un chemin par défaut ($HOME/Downloads).
 
-<<<<<<< HEAD:sort/directorysort.sh
-SOURCE_DIR="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo "$HOME/Downloads")" # << LE DOSSIER SOURCE EST MAINTENANT LE DOSSIER DE TÉLÉCHARGEMENTS
-LOG_FILE="$HOME/reorganisation_downloads.log"
-=======
 SOURCE_DIR="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo "$HOME/Downloads")" 
 LOG_FILE="$HOME/reorganisation_downloads.log"     
->>>>>>> main:directorysort.sh
 
 
 # --- DÉTECTION DES DOSSIERS UTILISATEUR STANDARDS ---
@@ -59,7 +54,7 @@ declare -A FILE_TYPES=(
     [tgz]="$USER_DOWNLOAD_DIR/Archives"
     [bz2]="$USER_DOWNLOAD_DIR/Archives"
     [xz]="$USER_DOWNLOAD_DIR/Archives"
-    [iso]="$USER_DOWNLOAD_DIR/ISOs"
+    [iso]="$USER_DOWNLOAD_DIR/ISOs" 
 
     # Audio
     [mp3]="$USER_MUSIC_DIR"
@@ -142,14 +137,14 @@ for file in "$SOURCE_DIR"/*; do
         fi
 
         # Déplacer ou copier le fichier
-
+        
          mv -n "$file" "$DESTINATION_DIR/" # -n pour ne pas écraser les fichiers existants
          if [ $? -eq 0 ]; then
                 log_message "SUCCES" "Déplacé: '$filename' vers '$DESTINATION_DIR/'"
          else
                 log_message "ERREUR" "Échec du déplacement de '$filename' vers '$DESTINATION_DIR/'"
          fi
-
+        
     fi
 done
 
