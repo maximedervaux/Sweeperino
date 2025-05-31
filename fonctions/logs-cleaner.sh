@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source "$SCRIPT_DIR/utils/log.sh"
+source "$SCRIPT_DIR/config.sh"
 
 #Nettoyage des logs vieux de 30 jours
 nettoyer_logs() {

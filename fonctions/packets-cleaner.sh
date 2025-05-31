@@ -1,6 +1,7 @@
 #!/bin/bash
 
 source "$SCRIPT_DIR/utils/log.sh"
+source "$SCRIPT_DIR/config.sh"
 
 # Nettoyer les paquets inutiles selon la distribution
 nettoyer_paquets() {

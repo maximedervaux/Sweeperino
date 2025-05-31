@@ -1,3 +1,7 @@
+#!/bin/bash
+
+source "$SCRIPT_DIR/config.sh"
+
 #Fonction de log générique
 log() {
     # Définit le type de message (par défaut "INFO")
