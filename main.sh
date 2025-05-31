@@ -10,6 +10,10 @@ source "$SCRIPT_DIR/fonctions/cache-cleaner.sh"
 source "$SCRIPT_DIR/fonctions/storage.sh"
 source "$SCRIPT_DIR/sort/directorysort.sh"
 
+# BACKUP AND RESTORE
+source "$SCRIPT_DIR/fonctions/backup.sh"
+source "$SCRIPT_DIR/fonctions/restore.sh"
+
 #STYLE YAD
 ICON="dialog-information"
 TITLE="Mon Nettoyeur Linux"
@@ -40,7 +44,9 @@ while true; do
         3) nettoyer_doublons ;;
         4) nettoyer_cache ;;
         5) afficher_espace ;;
-        6 | "" ) exit 0 ;;
+        6) make_backup ;;
+        7) restore_backup ;;
+        8 | "" ) exit 0 ;;
         *) yad --info --text="Choix invalide" ;;
     esac
 done
