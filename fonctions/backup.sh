@@ -41,7 +41,7 @@ make_backup() {
     ls -1tr backup_*.tar.gz.enc | head -n -$MAX_BACKUPS | while read -r OLD_BACKUP; do
         rm -f "$OLD_BACKUP"
         rm -f "${OLD_BACKUP%.tar.gz.enc}.salt"
-
+    done
 
     echo "Save completed: $ENCRYPTED_PATH"
 }
