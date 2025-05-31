@@ -4,13 +4,8 @@
 # Nous allons utiliser xdg-user-dir pour trouver le chemin correct de votre dossier de téléchargements.
 # Si xdg-user-dir n'est pas disponible ou échoue, il utilisera un chemin par défaut ($HOME/Downloads).
 
-<<<<<<< HEAD:sort/directorysort.sh
 SOURCE_DIR="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo "$HOME/Downloads")" # << LE DOSSIER SOURCE EST MAINTENANT LE DOSSIER DE TÉLÉCHARGEMENTS
 LOG_FILE="$HOME/reorganisation_downloads.log"
-=======
-SOURCE_DIR="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo "$HOME/Downloads")" 
-LOG_FILE="$HOME/reorganisation_downloads.log"     
->>>>>>> main:directorysort.sh
 
 
 # --- DÉTECTION DES DOSSIERS UTILISATEUR STANDARDS ---
