@@ -1,100 +1,113 @@
 #!/bin/bash
 
-# -- Variables --
 LOG_FILE="$HOME/monnettoyeur.log"
 DATE_NOW=$(date '+%Y-%m-%d_%H-%M-%S')
-
-# Détection distro basique (apt ou dnf)
-if command -v apt &>/dev/null; then
-    PKG_MGR="apt"
-elif command -v dnf &>/dev/null; then
-    PKG_MGR="dnf"
-else
-    PKG_MGR="unknown"
-fi
-
-# -- Fonctions --
 
 log() {
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a "$LOG_FILE"
 }
 
-nettoyer_paquets() {
-    log "Nettoyage des paquets inutilisés avec $PKG_MGR"
-    if [[ $PKG_MGR == "apt" ]]; then
-       	sudo apt autoremove -y | tee -a "$LOG_FILE"
-        sudo apt clean | tee -a "$LOG_FILE"
-    elif [[ $PKG_MGR == "dnf" ]]; then
-        sudo dnf autoremove -y | tee -a "$LOG_FILE"
-        sudo dnf clean all | tee -a "$LOG_FILE"
-    else
-        log "Gestionnaire de paquets non supporté"
-    fi
-}
 
+# Nettoyer logs vieux de 30 jours
 nettoyer_logs() {
-    log "Nettoyage des logs vieux de plus de 30 jours"
-    sudo find /var/log -type f -mtime +30 -exec rm -v {} \; | tee -a "$LOG_FILE"
-}
+    FILES=$(find /var/log -type f -mtime +30 2>/dev/null)
 
-trouver_doublons() {
-    if ! command -v fdupes &>/dev/null; then
-        log "fdupes non installé. Installation..."
-        if [[ $PKG_MGR == "apt" ]]; then
-            sudo apt install -y fdupes
-        elif [[ $PKG_MGR == "dnf" ]]; then
-            sudo dnf install -y fdupes
-        else
-            log "Impossible d’installer fdupes"
-            return
-        fi
+    if [ -z "$FILES" ]; then
+        yad --info --text="Aucun fichier log vieux de plus de 30 jours trouvé."
+        return
     fi
 
-    echo "Recherche de fichiers doublons dans votre dossier personnel..."
-    fdupes -r -dN "$HOME"
+    FILES_LIST=$(echo "$FILES" | sed 's/^/- /')
+
+    yad --width=600 --height=400 --text="Fichiers logs à supprimer :\n\n$FILES_LIST\n\nConfirmez la suppression ?" \
+        --button=gtk-ok:0 --button=gtk-cancel:1
+
+    if [ $? -eq 0 ]; then
+        log "Suppression logs anciens"
+        while IFS= read -r file; do
+            sudo rm -v "$file" | tee -a "$LOG_FILE"
+        done <<< "$FILES"
+        yad --info --text="Suppression terminée."
+    else
+        yad --info --text="Suppression annulée."
+    fi
 }
 
+# Trouver et supprimer doublons via fdupes
+nettoyer_doublons() {
+    if ! command -v fdupes >/dev/null 2>&1; then
+        yad --error --text="Le paquet 'fdupes' n'est pas installé. Veuillez l'installer pour utiliser cette fonction."
+        return
+    fi
+
+    # Scanner dossier home
+    fdupes -r "$HOME" > /tmp/doublons.txt
+
+    if [ ! -s /tmp/doublons.txt ]; then
+        yad --info --text="Aucun fichier doublon trouvé dans $HOME."
+        return
+    fi
+
+    yad --text-info --filename=/tmp/doublons.txt --width=600 --height=400 --title="Fichiers doublons trouvés"
+
+    yad --question --text="Voulez-vous lancer la suppression interactive des doublons ?"
+
+    if [ $? -eq 0 ]; then
+        yad --info --text="Lancement suppression interactive. Utilisez 'fdupes -rdN $HOME' en console."
+        # Lancer suppression interactive dans un terminal
+        gnome-terminal -- bash -c "fdupes -rdN $HOME; exec bash" 2>/dev/null || \
+        xterm -e "fdupes -rdN $HOME; bash"
+        log "Suppression interactive doublons lancée"
+    else
+        yad --info --text="Opération annulée."
+    fi
+}
+
+# Nettoyer cache utilisateur
 nettoyer_cache() {
-    log "Nettoyage des caches utilisateurs"
-    rm -rf "$HOME/.cache/thumbnails"/*
-    log "Caches thumbnails supprimés"
-    # Nettoyage cache apt/dnf déjà fait dans nettoyage paquets
+    CACHE_DIR="$HOME/.cache"
+    if [ ! -d "$CACHE_DIR" ]; then
+        yad --info --text="Aucun cache utilisateur trouvé."
+        return
+    fi
+
+    SIZE=$(du -sh "$CACHE_DIR" | cut -f1)
+    yad --question --text="Le cache utilisateur occupe $SIZE. Voulez-vous le nettoyer ?"
+
+    if [ $? -eq 0 ]; then
+        log "Nettoyage cache utilisateur"
+        rm -rf "$CACHE_DIR"/* 2>/dev/null
+        yad --info --text="Cache nettoyé."
+    else
+        yad --info --text="Nettoyage annulé."
+    fi
 }
 
+# Affichage espace disque
 afficher_espace() {
-    echo "Espace disque avant nettoyage :"
-    df -h /
+    espace=$(df -h / | awk 'NR==2 {print $4 " libres sur " $2}')
+    yad --info --text="Espace disque disponible : $espace"
 }
 
-menu() {
-    clear
-    echo "===== Menu Nettoyeur Système ====="
-    echo "1) Nettoyer paquets inutilisés"
-    echo "2) Nettoyer logs anciens"
-    echo "3) Trouver & supprimer fichiers doublons"
-    echo "4) Nettoyer caches utilisateur"
-    echo "5) Afficher espace disque"
-    echo "6) Quitter"
-    echo "=================================="
-    read -rp "Choix : " choix
-    case $choix in
+# Menu principal YAD
+while true; do
+    ligne=$(yad --width=400 --height=350 --title="Mon Nettoyeur Linux" --list --column="Option" --column="Description" \
+        1 "Nettoyer paquets orphelins" \
+        2 "Nettoyer logs vieux de 30 jours" \
+        3 "Trouver et supprimer doublons" \
+        4 "Nettoyer cache utilisateur" \
+        5 "Afficher espace disque" \
+        6 "Quitter")
+   
+    choix=$(echo "$ligne" | cut -d"|" -f1)
+
+    case "$choix" in
         1) nettoyer_paquets ;;
         2) nettoyer_logs ;;
-        3) trouver_doublons ;;
+        3) nettoyer_doublons ;;
         4) nettoyer_cache ;;
         5) afficher_espace ;;
-        6) echo "Bye !" ; exit 0 ;;
-        *) echo "Choix invalide" ; sleep 1 ;;
+        6) exit 0 ;;
+        *) yad --info --text="$choix" ;;
     esac
-}
-
-# -- Script principal --
-
-touch "$LOG_FILE"
-log "=== Début du nettoyage système ==="
-
-while true; do
-    menu
-    read -rp "Appuyez sur Entrée pour continuer..."
 done
-
