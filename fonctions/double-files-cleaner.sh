@@ -25,7 +25,7 @@ nettoyer_doublons() {
     local group_id=0
 
     # Chaîne qui va contenir les données formatées pour YAD
-    local yad_input="" 
+    local yad_lines="" 
 
     # Variable temporaire pour lire chaque ligne du fichier
     local line
@@ -39,20 +39,13 @@ nettoyer_doublons() {
         fi
 
         # Format : group_id|filepath
-        yad_input+="${group_id}|${line}\n"
+         yad_lines+="TRUE|$group_id|$line\n"
 
     done < /tmp/doublons.txt
 
-    # Fichier temporaire pour YAD et entête
-    local yad_file=$(mktemp)
-    echo -e "Groupe|Fichier\n$yad_input" > "$yad_file"
-
     # Lance YAD en mode liste avec les doublons trouvés
-    local selection=$(yad --list --width=800 --height=500 --title="Fichiers doublons trouvés - Sélectionnez à supprimer" \
-        --column="Groupe" --column="Fichier" --checklist --separator="|" --file="$yad_file")
-
-    # Nettoyage du fichier temporaire
-    rm -f "$yad_file"
+    local selection=$(echo -e -n "$yad_lines" | yad --list --width=800 --height=500 --title="Fichiers doublons trouvés - Sélectionnez à supprimer" \
+        --checklist --column="Supprimer" --column="Groupe" --column="Fichier" --separator="|")
 
     # Vérifie si l'utilisateur a sélectionné des fichiers
     if [ -z "$selection" ]; then
