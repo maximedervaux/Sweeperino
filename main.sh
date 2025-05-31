@@ -6,10 +6,9 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 source "$SCRIPT_DIR/fonctions/logs-cleaner.sh"
 source "$SCRIPT_DIR/fonctions/packets-cleaner.sh"
 source "$SCRIPT_DIR/fonctions/double-files-cleaner.sh"
-
-#source "$SCRIPT_DIR/fonctions/cache.sh"
-#source "$SCRIPT_DIR/fonctions/espace.sh"
-#source "$SCRIPT_DIR/fonctions/config.sh"
+source "$SCRIPT_DIR/fonctions/cache-cleaner.sh"
+source "$SCRIPT_DIR/fonctions/storage.sh"
+source "$SCRIPT_DIR/sort/directorysort.sh"
 
 #STYLE YAD
 ICON="dialog-information"
@@ -33,8 +32,7 @@ while true; do
         3 "📁 Supprimer fichiers doublons" \
         4 "🧽 Nettoyer le cache utilisateur" \
         5 "💾 Afficher espace disque" \
-        6 "⚙️ Configurer le chemin du fichier log" \
-        7 "🚪 Quitter")
+        6 "🚪 Quitter")
 
     case "${CHOIX%%|*}" in
         1) nettoyer_paquets ;;
@@ -42,8 +40,7 @@ while true; do
         3) nettoyer_doublons ;;
         4) nettoyer_cache ;;
         5) afficher_espace ;;
-        6) configurer_log_file ;;
-        7 | "" ) exit 0 ;;
+        6 | "" ) exit 0 ;;
         *) yad --info --text="Choix invalide" ;;
     esac
 done

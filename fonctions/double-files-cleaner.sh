@@ -25,8 +25,7 @@ nettoyer_doublons() {
     if [ $? -eq 0 ]; then
         yad --info --text="Lancement suppression interactive. Utilisez 'fdupes -rdN $HOME' en console."
         # Lancer suppression interactive dans un terminal
-        gnome-terminal -- bash -c "fdupes -rdN $HOME; exec bash" 2>/dev/null || \
-        xterm -e "fdupes -rdN $HOME; bash"
+        gnome-terminal -- bash -c "fdupes -rdN $HOME; exec bash" 2>/dev/null 
         log "Suppression interactive doublons lancée"
     else
         yad --info --text="Opération annulée."
