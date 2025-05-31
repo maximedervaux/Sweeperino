@@ -5,9 +5,8 @@ SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
 source "$SCRIPT_DIR/fonctions/logs-cleaner.sh"
 source "$SCRIPT_DIR/fonctions/packets-cleaner.sh"
+source "$SCRIPT_DIR/fonctions/double-files-cleaner.sh"
 
-#source "$SCRIPT_DIR/config.sh"
-#source "$SCRIPT_DIR/fonctions/doublons.sh"
 #source "$SCRIPT_DIR/fonctions/cache.sh"
 #source "$SCRIPT_DIR/fonctions/espace.sh"
 #source "$SCRIPT_DIR/fonctions/config.sh"
