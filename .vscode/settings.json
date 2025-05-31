@@ -1,5 +1,9 @@
 {
     "conventionalCommits.scopes": [
-        "BACKUP features"
+        "BACKUP features",
+        "CACHECLEANER features",
+        "LOG features",
+        "PACKET features",
+        "FILES features",
     ]
 }
