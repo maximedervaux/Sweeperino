@@ -1,22 +1,5 @@
 #!/bin/bash
 
-# --- CONFIGURATION INITIALE ---
-# Nous allons utiliser xdg-user-dir pour trouver le chemin correct de votre dossier de téléchargements.
-# Si xdg-user-dir n'est pas disponible ou échoue, il utilisera un chemin par défaut ($HOME/Downloads).
-
-SOURCE_DIR="$(xdg-user-dir DOWNLOAD 2>/dev/null || echo "$HOME/Downloads")" # << LE DOSSIER SOURCE EST MAINTENANT LE DOSSIER DE TÉLÉCHARGEMENTS
-LOG_FILE="$HOME/reorganisation_downloads.log"
-
-
-# --- DÉTECTION DES DOSSIERS UTILISATEUR STANDARDS ---
-# Utilisez xdg-user-dir pour obtenir les chemins corrects des autres dossiers utilisateur.
-# Cela gère les noms localisés (ex: "Images" vs "Pictures").
-USER_DESKTOP_DIR="$(xdg-user-dir DESKTOP 2>/dev/null || echo "$HOME/Desktop")"
-USER_DOCUMENTS_DIR="$(xdg-user-dir DOCUMENTS 2>/dev/null || echo "$HOME/Documents")"
-USER_DOWNLOAD_DIR="$SOURCE_DIR" 
-USER_MUSIC_DIR="$(xdg-user-dir MUSIC 2>/dev/null || echo "$HOME/Music")"
-USER_PICTURES_DIR="$(xdg-user-dir PICTURES 2>/dev/null || echo "$HOME/Pictures")"
-USER_VIDEOS_DIR="$(xdg-user-dir VIDEOS 2>/dev/null || echo "$HOME/Videos")"
 
 # Liste des extensions et des dossiers cibles en utilisant les chemins détectés
 declare -A FILE_TYPES=(
