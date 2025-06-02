@@ -90,18 +90,23 @@ Nous avons essayé de rendre l’application la plus **modulaire et maintenable*
 - `yad`
 - `fdupes`
 - `xdg-user-dirs`
-- `gnome-terminal` 
+- `gnome-terminal`
+- `argon2`
+- `openssl`
+- `zip`
+- `tar`
+- `coreutils`
 
 ### Installation Debian/Ubuntu :
 
 ```bash
-sudo apt install yad fdupes gnome-terminal xdg-user-dirs
+sudo apt install yad fdupes gnome-terminal xdg-user-dirs argon2 openssl zip tar coreutils
 ```
 
 ### Installation Fedora :
 
 ```bash
-ssudo dnf install yad fdupes gnome-terminal xdg-user-dirs
+ssudo dnf install yad fdupes gnome-terminal xdg-user-dirs argon2 openssl zip tar coreutils
 ```
 ---
 
