@@ -74,8 +74,6 @@ declare -A FILE_TYPES=(
     [hpp]="$USER_DOCUMENTS_DIR/Code"
     [go]="$USER_DOCUMENTS_DIR/Code"
 )
-# Dossier par défaut pour les fichiers non reconnus
-DEFAULT_FOLDER_PATH="$USER_DOWNLOAD_DIR/Autres"
 
 sort(){
 # --- VÉRIFICATIONS PRÉLIMINAIRES ---
