@@ -77,31 +77,25 @@ declare -A FILE_TYPES=(
 # Dossier par défaut pour les fichiers non reconnus
 DEFAULT_FOLDER_PATH="$USER_DOWNLOAD_DIR/Autres"
 
-# --- FONCTIONS DE LOGGING ---
-log_message() {
-    local type="$1"
-    local message="$2"
-    echo "$(date '+%Y-%m-%d %H:%M:%S') [$type] $message" | tee -a "$LOG_FILE"
-}
-
+sort(){
 # --- VÉRIFICATIONS PRÉLIMINAIRES ---
-if [ ! -d "$SOURCE_DIR" ]; then
-    log_message "ERREUR" "Le dossier source de téléchargements '$SOURCE_DIR' n'existe pas ou n'a pas pu être détecté. Vérifiez xdg-user-dir."
+if [ ! -d "$SOURCE_DIR_SORT" ]; then
+    log "ERREUR" "Le dossier source de téléchargements '$SOURCE_DIR_SORT' n'existe pas ou n'a pas pu être détecté. Vérifiez xdg-user-dir."
     exit 1
 fi
 
 # Créer le dossier par défaut si nécessaire
 if [ ! -d "$DEFAULT_FOLDER_PATH" ]; then
-    log_message "INFO" "Le dossier par défaut '$DEFAULT_FOLDER_PATH' n'existe pas. Création..."
-    mkdir -p "$DEFAULT_FOLDER_PATH" || { log_message "ERREUR" "Impossible de créer le dossier par défaut '$DEFAULT_FOLDER_PATH'."; exit 1; }
+    log "INFO" "Le dossier par défaut '$DEFAULT_FOLDER_PATH' n'existe pas. Création..."
+    mkdir -p "$DEFAULT_FOLDER_PATH" || { log "ERREUR" "Impossible de créer le dossier par défaut '$DEFAULT_FOLDER_PATH'."; exit 1; }
 fi
 
 # --- LOGIQUE DE RÉORGANISATION ---
-log_message "INFO" "Démarrage de la réorganisation du dossier '$SOURCE_DIR'."
-log_message "INFO" "Mode: $( [ "$MOVE_FILES" = true ] && echo "Déplacement" || echo "Copie" ) des fichiers."
+log "INFO" "Démarrage de la réorganisation du dossier '$SOURCE_DIR_SORT'."
+log "INFO" "Mode: $( [ "$MOVE_FILES" = true ] && echo "Déplacement" || echo "Copie" ) des fichiers."
 
 # Parcourir tous les fichiers (non récursif, seulement dans le dossier source)
-for file in "$SOURCE_DIR"/*; do
+for file in "$SOURCE_DIR_SORT"/*; do
     if [ -f "$file" ]; then # S'assurer que c'est bien un fichier
         filename=$(basename "$file")
         extension="${filename##*.}" # Extrait l'extension
@@ -115,21 +109,22 @@ for file in "$SOURCE_DIR"/*; do
 
         # Créer le dossier de destination s'il n'existe pas
         if [ ! -d "$DESTINATION_DIR" ]; then
-            log_message "INFO" "Création du sous-dossier: '$DESTINATION_DIR'"
-            mkdir -p "$DESTINATION_DIR" || { log_message "ERREUR" "Impossible de créer le sous-dossier '$DESTINATION_DIR'."; continue; }
+            log "INFO" "Création du sous-dossier: '$DESTINATION_DIR'"
+            mkdir -p "$DESTINATION_DIR" || { log "ERREUR" "Impossible de créer le sous-dossier '$DESTINATION_DIR'."; continue; }
         fi
 
         # Déplacer ou copier le fichier
 
          mv -n "$file" "$DESTINATION_DIR/" # -n pour ne pas écraser les fichiers existants
          if [ $? -eq 0 ]; then
-                log_message "SUCCES" "Déplacé: '$filename' vers '$DESTINATION_DIR/'"
+                log "SUCCES" "Déplacé: '$filename' vers '$DESTINATION_DIR/'"
          else
-                log_message "ERREUR" "Échec du déplacement de '$filename' vers '$DESTINATION_DIR/'"
+                log "ERREUR" "Échec du déplacement de '$filename' vers '$DESTINATION_DIR/'"
          fi
 
     fi
 done
 
-log_message "INFO" "Réorganisation du dossier de téléchargements terminée."
-log_message "INFO" "Consultez le fichier de log '$LOG_FILE' pour le détail des opérations."
+log "INFO" "Réorganisation du dossier de téléchargements terminée."
+log "INFO" "Consultez le fichier de log '$LOG_FILE' pour le détail des opérations."
+}
