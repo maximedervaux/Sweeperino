@@ -52,6 +52,7 @@ Ce chemin peut être modifié via le fichier `config.sh`.
 
 ## 📁 Structure du projet
 
+```
 sweeperino/
 ├── main.sh                # Script principal
 ├── config.sh              # Configuration globale
@@ -65,7 +66,7 @@ sweeperino/
 │   └── directorysort.sh        # Script de tri automatique des téléchargements
 ├── utils/
 │   └── log.sh                  # Utilitaires de log
-
+```
 ---
 
 ## ✨ Respect du Clean Code
