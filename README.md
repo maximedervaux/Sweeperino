@@ -3,6 +3,7 @@
 **Sweeperino** est un utilitaire graphique en Bash conçu pour simplifier la maintenance de base d’un système Linux.  
 L'idée est d'avoir un outil "basique" permettant de clean son environnement (vider caches/logs, trier les dossiers, etc...).
 
+> Quand le bash fait la fiesta, Sweeperino nettoie les degats
 ---
 
 ## 🎯 Objectifs du projet
