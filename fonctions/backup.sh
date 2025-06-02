@@ -8,6 +8,18 @@ make_backup() {
     # Load configuration
     source "$(dirname "$0")/config.sh"
 
+    # Check if the source directory exists
+    if [ ! -d "$SOURCE_DIR" ]; then
+        echo "Src folder not found: $SOURCE_DIR"
+        exit 1
+    fi
+
+    # Create the backup directory if it does not exist
+    mkdir -p "$BACKUP_DIR" || {
+        echo " Impossible to create folder : $BACKUP_DIR"
+        exit 1
+    }
+
     # Password input
     read -s -p "Mot de passe pour le chiffrement : " PASSWORD
     echo
@@ -23,9 +35,8 @@ make_backup() {
     SALT=$(openssl rand -hex 8)
     SALT_FILE="${BACKUP_DIR}/backup_${TIMESTAMP}.salt"
 
-    # 3. Dériver une clé avec Argon2
+    # 3. Derive key from password and salt using Argon
     KEY=$(echo -n "$PASSWORD" | argon2 "$SALT" -id -t 2 -m 16 -p 1 -l 32 -r | awk '{print $2}')
-
 
     # ENCRYPTION of the archive
     ENCRYPTED_FILE="backup_${TIMESTAMP}.tar.gz.enc"
