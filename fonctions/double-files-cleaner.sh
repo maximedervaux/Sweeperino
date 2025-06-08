@@ -23,11 +23,17 @@ nettoyer_doublons() {
     yad --question --text="Voulez-vous lancer la suppression interactive des doublons ?"
 
     if [ $? -eq 0 ]; then
-        yad --info --text="Lancement suppression interactive. Utilisez 'fdupes -rdN $HOME' en console."
-        # Lancer suppression interactive dans un terminal
-        gnome-terminal -- bash -c "fdupes -rdN $HOME; exec bash" 2>/dev/null 
-        log "Suppression interactive doublons lancée"
+        # Suppression directe avec fdupes, sans terminal externe
+        if fdupes -rdN "$HOME" >> "$LOG_FILE" 2>&1; then
+            yad --info --text="Suppression terminée. Les doublons ont été supprimés automatiquement."
+            log "SUPPRESSION" "fdupes a supprimé les doublons dans $HOME"
+        else
+            yad --error --text="Une erreur est survenue lors de la suppression des doublons."
+            log "ERREUR" "Échec suppression automatique des doublons"
+        fi
     else
-        yad --info --text="Opération annulée."
+        yad --info --text="Suppression annulée."
+        log "INFO" "Suppression des doublons annulée par l'utilisateur"
     fi
+
 }

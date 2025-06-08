@@ -1,11 +1,11 @@
 #!/bin/bash
 
 set -e
+#source "$SCRIPT8DIR/
 
 # Function make_backup
 make_backup() {
 
-    # Load configuration
     source "$(dirname "$0")/config.sh"
 
     # Check if the source directory exists

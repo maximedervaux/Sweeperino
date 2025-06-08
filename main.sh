@@ -8,7 +8,7 @@ source "$SCRIPT_DIR/fonctions/packets-cleaner.sh"
 source "$SCRIPT_DIR/fonctions/double-files-cleaner.sh"
 source "$SCRIPT_DIR/fonctions/cache-cleaner.sh"
 source "$SCRIPT_DIR/fonctions/storage.sh"
-source "$SCRIPT_DIR/sort/directorysort.sh"
+source "$SCRIPT_DIR/fonctions/directorysort.sh"
 
 # BACKUP AND RESTORE
 source "$SCRIPT_DIR/fonctions/backup.sh"
@@ -16,7 +16,7 @@ source "$SCRIPT_DIR/fonctions/restore.sh"
 
 #STYLE YAD
 ICON="dialog-information"
-TITLE="Mon Nettoyeur Linux"
+TITLE="Sweeperino"
 WIDTH=450
 HEIGHT=400
 
