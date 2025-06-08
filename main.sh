@@ -38,7 +38,8 @@ while true; do
         5 "💾 Afficher espace disque" \
         6 "📦 Faire une sauvegarde" \
         7 "📂 Restaurer une sauvegarde" \
-        8 "🚪 Quitter")
+        8 "📂 Trier un Dossier" \
+        9 "🚪 Quitter")
 
     case "${CHOIX%%|*}" in
         1) nettoyer_paquets ;;
@@ -48,7 +49,8 @@ while true; do
         5) afficher_espace ;;
         6) make_backup ;;
         7) restore_backup ;;
-        8 | "" ) exit 0 ;;
+        8) sort ;;
+        9 | "" ) exit 0 ;;
         *) yad --info --text="Choix invalide" ;;
     esac
 done
