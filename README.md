@@ -12,6 +12,7 @@ L'idée est d'avoir un outil "basique" permettant de clean son environnement (vi
 - Intégrer une interface graphique utilisateur (YAD).
 - Remonter des logs des actions menées.
 - Appliquer des bonnes pratiques de développement Bash.
+- Créer des backups 
 
 ---
 
@@ -34,6 +35,9 @@ L'idée est d'avoir un outil "basique" permettant de clean son environnement (vi
 
 6. **Tri automatique des téléchargements**  
    ➜ Classe automatiquement les fichiers du dossier *Téléchargements* dans les répertoires appropriés selon leur type (Images, Documents, Vidéos, etc...).
+
+7. **Backups**
+   ➜ Creer des backups chiffrées du dossier selectionné en config. Et propose de restaurer n'importe quelles backups sur le system.
 
 ---
 
@@ -63,6 +67,8 @@ sweeperino/
 │   ├── double-files-cleaner.sh # Suppression de fichiers doublons
 │   ├── cache-cleaner.sh        # Nettoyage de cache utilisateur
 │   └── storage.sh              # Affichage de l’espace disque
+│   └── restore.sh		# Restore la backup selectionnée
+│   └── backup.sh 		# Créé une backup d'un dossier
 ├── sort/
 │   └── directorysort.sh        # Script de tri automatique des téléchargements
 ├── utils/
@@ -84,18 +90,23 @@ Nous avons essayé de rendre l’application la plus **modulaire et maintenable*
 - `yad`
 - `fdupes`
 - `xdg-user-dirs`
-- `gnome-terminal` 
+- `gnome-terminal`
+- `argon2`
+- `openssl`
+- `zip`
+- `tar`
+- `coreutils`
 
 ### Installation Debian/Ubuntu :
 
 ```bash
-sudo apt install yad fdupes gnome-terminal xdg-user-dirs
+sudo apt install yad fdupes gnome-terminal xdg-user-dirs argon2 openssl zip tar coreutils
 ```
 
 ### Installation Fedora :
 
 ```bash
-ssudo dnf install yad fdupes gnome-terminal xdg-user-dirs
+ssudo dnf install yad fdupes gnome-terminal xdg-user-dirs argon2 openssl zip tar coreutils
 ```
 ---
 
