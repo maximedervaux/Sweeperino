@@ -38,7 +38,7 @@ while true; do
         5 "💾 Afficher espace disque" \
         6 "📦 Faire une sauvegarde" \
         7 "📂 Restaurer une sauvegarde" \
-        8 "📂 Trier un Dossier" \
+        8 "🧺 Trier un Dossier" \
         9 "🚪 Quitter")
 
     case "${CHOIX%%|*}" in
