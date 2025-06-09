@@ -69,7 +69,7 @@ sweeperino/
 │   └── storage.sh              # Affichage de l’espace disque
 │   └── restore.sh		# Restore la backup selectionnée
 │   └── backup.sh 		# Créé une backup d'un dossier
-│   └── directorysort.sh        # Script de tri automatique des téléchargements
+│   └── directory-sort.sh        # Script de tri automatique des téléchargements
 ├── utils/
 │   └── log.sh                  # Utilitaires de log
 ```
@@ -109,8 +109,6 @@ ssudo dnf install yad fdupes gnome-terminal xdg-user-dirs argon2 openssl zip tar
 ```
 ---
 
-<<<<<<< HEAD
-=======
 ### ⚙️ Variables de Configuration
 
 Le fichier config.sh centralise les variables essentielles pour personnaliser le comportement de Sweeperino. Vous pouvez y ajuster les chemins des fichiers de log et des répertoires de sauvegarde, ainsi que d'autres paramètres importants.
@@ -162,9 +160,6 @@ Voici les variables de configuration liées au tri :
     DEFAULT_FOLDER_PATH: Le répertoire par défaut où les fichiers non reconnus seront déplacés.
         Exemple : DEFAULT_FOLDER_PATH="$USER_DOWNLOAD_DIR/Autres"
 
----
-
->>>>>>> a060dca (fix(english) : replace all french comments and titles with english)
 ## 🚀 Lancement
 
 Pour lancer **Sweeperino** avec son interface graphique :
