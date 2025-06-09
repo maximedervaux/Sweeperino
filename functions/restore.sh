@@ -2,10 +2,11 @@
 
 set -e
 
-restore_backup() {
+# Load configuration
+source "$(dirname "$0")/config.sh"
 
-    # Load configuration
-    source "$(dirname "$0")/config.sh"
+
+restore_backup() {
 
     cd "$BACKUP_DIR" || exit 1
 
@@ -40,5 +41,5 @@ restore_backup() {
     mkdir -p "$RESTORE_DIR"
     tar -xzf "$DECRYPTED" -C "$RESTORE_DIR"
 
-    echo "✅ Sauvegarde extraite dans : $RESTORE_DIR"
+   echo "✅ Backup extracted to: $RESTORE_DIR"
 }

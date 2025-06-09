@@ -2,14 +2,14 @@
 
 source "$SCRIPT_DIR/config.sh"
 
-#Fonction de log générique
+# Generic log function
 log() {
-    # Définit le type de message (par défaut "INFO")
+    # Set message type (default to "INFO")
     local msg_type="${1:-INFO}"
 
-    # Définit le contenu du message, ou un message vide si non fourni
+    # Set message content, or empty if not provided
     local message="${2:-}"
 
-    # Affiche et enregistre le message dans le fichier de log
+    # Display and save the message to the log file
     echo "[$(date '+%Y-%m-%d %H:%M:%S')] [$msg_type] $message" | tee -a "$LOG_FILE"
 }
