@@ -1,18 +1,18 @@
 #!/bin/bash
 
-#CHEMINS ET CHARGEMENTS
+# PATHS AND SOURCES
 SCRIPT_DIR="$(dirname "$(readlink -f "$0")")"
 
-source "$SCRIPT_DIR/fonctions/logs-cleaner.sh"
-source "$SCRIPT_DIR/fonctions/packets-cleaner.sh"
-source "$SCRIPT_DIR/fonctions/double-files-cleaner.sh"
-source "$SCRIPT_DIR/fonctions/cache-cleaner.sh"
-source "$SCRIPT_DIR/fonctions/storage.sh"
-source "$SCRIPT_DIR/fonctions/directorysort.sh"
+source "$SCRIPT_DIR/functions/logs-cleaner.sh"
+source "$SCRIPT_DIR/functions/packets-cleaner.sh"
+source "$SCRIPT_DIR/functions/double-files-cleaner.sh"
+source "$SCRIPT_DIR/functions/cache-cleaner.sh"
+source "$SCRIPT_DIR/functions/storage.sh"
+source "$SCRIPT_DIR/functions/directory-sort.sh"
 
 # BACKUP AND RESTORE
-source "$SCRIPT_DIR/fonctions/backup.sh"
-source "$SCRIPT_DIR/fonctions/restore.sh"
+source "$SCRIPT_DIR/functions/backup.sh"
+source "$SCRIPT_DIR/functions/restore.sh"
 
 #STYLE YAD
 ICON="dialog-information"
@@ -20,7 +20,7 @@ TITLE="Sweeperino"
 WIDTH=450
 HEIGHT=400
 
-#BOUCLE DU MENU PRINCIPAL
+# MAIN LOOP
 while true; do
     CHOIX=$(yad \
         --width=$WIDTH \
@@ -31,26 +31,26 @@ while true; do
         --list \
         --separator="|" \
         --column="ID:NUM" --column="Action" \
-        1 "🧹 Nettoyer paquets orphelins" \
-        2 "🧾 Nettoyer logs vieux de 30 jours" \
-        3 "📁 Supprimer fichiers doublons" \
-        4 "🧽 Nettoyer le cache utilisateur" \
-        5 "💾 Afficher espace disque" \
-        6 "📦 Faire une sauvegarde" \
-        7 "📂 Restaurer une sauvegarde" \
-        8 "🧺 Trier un Dossier" \
-        9 "🚪 Quitter")
+        1 "🧹 Clean orphan packages" \
+        2 "🧾 Clean logs older than 30 days" \
+        3 "📁 Delete duplicate files" \
+        4 "🧽 Clean user cache" \
+        5 "💾 Show disk space" \
+        6 "📦 Create a backup" \
+        7 "📂 Restore a backup" \
+        8 "🧺 Sort a folder" \
+        9 "🚪 Exit")
 
     case "${CHOIX%%|*}" in
-        1) nettoyer_paquets ;;
-        2) nettoyer_logs ;;
-        3) nettoyer_doublons ;;
-        4) nettoyer_cache ;;
-        5) afficher_espace ;;
+        1) clean_packages ;;
+        2) clean_old_logs ;;
+        3) clean_duplicates ;;
+        4) clean_user_cache ;;
+        5) display_space ;;
         6) make_backup ;;
         7) restore_backup ;;
-        8) sort ;;
+        8) directory_sort ;;
         9 | "" ) exit 0 ;;
-        *) yad --info --text="Choix invalide" ;;
+        *) yad --info --text="Invalid choice" ;;
     esac
 done

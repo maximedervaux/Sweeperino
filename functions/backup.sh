@@ -1,7 +1,6 @@
 #!/bin/bash
 
 set -e
-#source "$SCRIPT8DIR/
 
 # Function make_backup
 make_backup() {
@@ -16,12 +15,12 @@ make_backup() {
 
     # Create the backup directory if it does not exist
     mkdir -p "$BACKUP_DIR" || {
-        echo " Impossible to create folder : $BACKUP_DIR"
+        echo "Unable to create folder : $BACKUP_DIR"
         exit 1
     }
 
     # Password input
-    read -s -p "Mot de passe pour le chiffrement : " PASSWORD
+    read -s -p "Password for encryption : " PASSWORD
     echo
 
     # Create the backup archive (time-stamped / which directory)
@@ -35,7 +34,7 @@ make_backup() {
     SALT=$(openssl rand -hex 8)
     SALT_FILE="${BACKUP_DIR}/backup_${TIMESTAMP}.salt"
 
-    # 3. Derive key from password and salt using Argon
+    # Derive key from password and salt using Argon
     KEY=$(echo -n "$PASSWORD" | argon2 "$SALT" -id -t 2 -m 16 -p 1 -l 32 -r | awk '{print $2}')
 
     # ENCRYPTION of the archive
