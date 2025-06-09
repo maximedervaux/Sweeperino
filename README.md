@@ -69,7 +69,6 @@ sweeperino/
 │   └── storage.sh              # Affichage de l’espace disque
 │   └── restore.sh		# Restore la backup selectionnée
 │   └── backup.sh 		# Créé une backup d'un dossier
-├── sort/
 │   └── directorysort.sh        # Script de tri automatique des téléchargements
 ├── utils/
 │   └── log.sh                  # Utilitaires de log
