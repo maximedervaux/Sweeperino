@@ -160,6 +160,8 @@ Voici les variables de configuration liées au tri :
     DEFAULT_FOLDER_PATH: Le répertoire par défaut où les fichiers non reconnus seront déplacés.
         Exemple : DEFAULT_FOLDER_PATH="$USER_DOWNLOAD_DIR/Autres"
 
+---
+
 ## 🚀 Lancement
 
 Pour lancer **Sweeperino** avec son interface graphique :
